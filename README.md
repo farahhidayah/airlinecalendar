@@ -86,20 +86,24 @@ export default class AirlineCalendar extends LightningElement {
 
     handleSave() {
         const today = new Date().toLocaleDateString('en-GB',{timeZone: 'Asia/Kuala_Lumpur'});
-        if (this.departureDate < today) {
-            alert('⚠️ Departure date cannot be before today.');
-            return;
-        }
-        if (this.returnDate < this.departureDate) {
-            alert('⚠️ Return date cannot be before departure date.');
-            return;
-        }
-        console.log('Saving booking:', this.passengerName, this.departureDate, this.returnDate)
+        const departure = new Date(this.departureDate).toLocaleDateString('en-GB',{timeZone: 'Asia/Kuala_Lumpur'});
+        const returnD = new Date(this.returnDate).toLocaleDateString('en-GB',{timeZone: 'Asia/Kuala_Lumpur'});
 
         if (!this.passengerName || !this.departureDate || !this.returnDate) {
             alert('⚠️ Please fill in all fields before booking.');
             return;
         }
+        if (departure < today) {
+            alert('⚠️ Departure date cannot be before today.');
+            return;
+        }
+        if (returnD < departure) {
+            alert('⚠️ Return date cannot be before departure date.');
+            return;
+        }
+        console.log('Saving booking:', this.passengerName, this.departureDate, this.returnDate)
+
+        
 
         saveBooking({ 
             name: this.passengerName, 
